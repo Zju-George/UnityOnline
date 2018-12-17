@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace>
+    </RootNamespace>
+    <ProjectGuid>{14C96CAD-0A0F-A760-071C-9E37C44AD3E5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp-Editor-firstpass</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>.</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_1_1;UNITY_2018_1;UNITY_2018;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_GRID;ENABLE_TILEMAP;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_PACKMAN;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_LOCALIZATION;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_AR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_POST_PROCESSING_STACK_V2</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectType>EditorPlugins:7</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2018.1.1f1</UnityVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>D:\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>D:\Unity\Editor\Data\Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Attributes\CSGModelModifiedEventAttribute.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Attributes\EnumAsFlagsDrawer.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Bindings\CSGBindings.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Bindings\ExternalMethods.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushEditorManager\CSGBrushEditor.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushEditorManager\CSGBrushEditorManager.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushEditorManager\CSGBrushEditorWindow.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushEditorManager\FilteredSelection.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushEditorManager\IBrushTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushEditorManager\ToolConstants.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\ClipBrushTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\GenerateBrushTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\BoxGenerator.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\CylinderGenerator.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\ExtrudedGeneratorBase.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\FreeDrawGenerator.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\GeneratorBase.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\Helpers\BoxSettings.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\Helpers\CylinderDefinition.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\Helpers\CylinderSettings.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\Helpers\IShapeDefinition.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\Helpers\Outline2D.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\Helpers\SphereSettings.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\IBrushGenerator.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\Generators\SphereGenerator.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\MeshEditBrushTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\ObjectEditBrushTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\BrushTools\SurfaceEditBrushTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\CSGKeysPreferences.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\DebugEditorWindow.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\DragTools\BrushDragOnSurfaceTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\DragTools\MaterialDragOnSurfaceTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\DragTools\MeshDragOnSurfaceTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\DragTools\SceneDragTool.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\DragTools\SceneTools.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\ExportedModelEditor.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GeneratedMeshesEditor.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\BottomBarGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\BoxGeneratorGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\ClipToolGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\CommonGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\CSGBrushEditorGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\CylinderGeneratorGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\FreeDrawGeneratorGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\GenerateBrushToolGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\MeshToolGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\ModelInspectorGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\ObjectToolGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\SphereGeneratorGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\GUI\SurfaceToolGUI.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\SnappedPoint.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\EditorWindows\TexGenState.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Grid\Grid.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Grid\GridUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\BrushFactory.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\BrushTraits.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\CameraUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\ColorSettings.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\ControlMeshUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\CursorUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\GeometryUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\GUIStyleUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGDisc.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGFreeMove.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGFreeRotate.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGHandles.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGScaleSlider.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGSlider1D.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Handles\CSGSlider2D.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\MaterialUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\ModelTraits.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Operations\BrushOperations.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Operations\ControlMeshOperations.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Operations\TransformOperations.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\OperationsUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\SceneQuery\AABB.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\SceneQuery\BoundsUtilities.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\SceneQuery\BrushIntersection.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\SceneQuery\SceneQueryUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Selection\BrushSelection.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Selection\ControlMeshState.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Selection\ControlMeshState.Selection.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Selection\SelectBrushSurface.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Selection\SelectionUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Selection\TransformSelection.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\ShapePolygon\ShapePolygonUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\ShapeUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\SurfaceUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\TooltipUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\UndoGroup.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Helpers\Units.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\Cache\ChildNodeData.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\Cache\CSGBrushCache.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\Cache\CSGGroupCache.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\Cache\CSGOperationCache.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\Cache\HierarchyItem.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\Cache\ParentNodeData.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\CSGModelManager.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\CSGSceneManagerInstance.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\InternalCSGModelManager.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\MeshInstanceManager.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Managers\SceneViewEventHandler.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Obsolete\CSGSceneManager.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Obsolete\DefaultShapes.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Obsolete\SceneReloadChecker.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Obsolete\SceneUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Obsolete\UnitySceneEventHandler.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\BrushOutlineManager.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\BrushOutlineRenderer.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\CSGRenderer.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\GeometryWireframe.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\LineMeshRenderer.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\PaintUtility.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\PointMeshRenderer.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\PolygonMeshRenderer.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Rendering\RotationCircle.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Settings\CSGSettings.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Settings\KeyEvent.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Scripts\Settings\Keys.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Thirdparty\UnityFBXExporter\Editor\ExporterMenu.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Thirdparty\UnityFBXExporter\FBXExporter.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Thirdparty\UnityFBXExporter\FBXUnityMaterialGetter.cs" />
+    <Compile Include="Assets\Plugins\RealtimeCSG\Editor\Thirdparty\UnityFBXExporter\FBXUnityMeshGetter.cs" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\specialSurface.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\customWireDotted.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\zTestGenericLine.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\customNoDepthSurface.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\customThickWire.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\customDot.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Thirdparty\UnityFBXExporter\License.txt" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\coloredPolygon.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\genericLine.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\customWire.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\background.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\grid.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\customSurface.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\noZTestGenericLine.shader" />
+    <None Include="Assets\Plugins\RealtimeCSG\Editor\Resources\Shaders\orthogrid.shader" />
+    <Reference Include="UnityEditor.StandardEvents">
+      <HintPath>D:/unityProjects/PhotonTest/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>D:/unityProjects/PhotonTest/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.BaselibModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.BaselibModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CloudWebServicesModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CloudWebServicesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.FacebookModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.FacebookModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticlesLegacyModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ParticlesLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTrackingModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpatialTrackingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StyleSheetsModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.StyleSheetsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TimelineModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.TimelineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WebModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WebModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Locator">
+      <HintPath>D:/Unity/Editor/Data/Managed/Unity.Locator.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/Editor/UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Timeline">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIAutomation">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIAutomation">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/Editor/UnityEditor.UIAutomation.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.GoogleAudioSpatializer">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GoogleAudioSpatializer">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>D:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>D:/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>D:/Unity/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>D:/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="BooleanRT">
+      <HintPath>D:/unityProjects/PhotonTest/Assets/BooleanRT/Plugins/BooleanRT.dll</HintPath>
+    </Reference>
+    <Reference Include="BooleanRTEditor">
+      <HintPath>D:/unityProjects/PhotonTest/Assets/BooleanRT/Plugins/Editor/BooleanRTEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="CSGWindow">
+      <HintPath>D:/unityProjects/PhotonTest/Assets/CSG/Editor/CSGWindow.dll</HintPath>
+    </Reference>
+    <Reference Include="CSG">
+      <HintPath>D:/unityProjects/PhotonTest/Assets/CSG/Files/CSG/Editor/DLL/CSG.dll</HintPath>
+    </Reference>
+    <Reference Include="SabreCSG.Core">
+      <HintPath>D:/unityProjects/PhotonTest/Assets/SabreCSG/Scripts/SabreCSG.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>C:/Users/Lenovo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.7/Editor/UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:/Users/Lenovo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>C:/Users/Lenovo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/Editor/UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>C:/Users/Lenovo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>C:/Users/Lenovo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.purchasing@2.0.1/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StandardEvents">
+      <HintPath>C:/Users/Lenovo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript.Lang">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/UnityScript.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang">
+      <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/Boo.Lang.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{B74DE3B0-EA00-975B-42E1-B25C2AA8986F}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
