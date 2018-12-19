@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Net.Sockets;
 
 public class _GameManager : MonoBehaviour {
     public static _GameManager Instance { set; get; }
@@ -22,6 +23,7 @@ public class _GameManager : MonoBehaviour {
         Instance = this;
         PlayerIndex = 0;
         DontDestroyOnLoad(gameObject);
+        
     }
     public void OnClickConnect()
     {
@@ -53,16 +55,23 @@ public class _GameManager : MonoBehaviour {
     {
         try
         {
-            Server s = Instantiate(serverPrefab).GetComponent<Server>();
-            s.Init();
-
-            Client c = Instantiate(clientPrefab).GetComponent<Client>();
-            c.clientName ="host";
-            c.ConnectToServer("192.168.0.107", 6321);
+            TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();
+            if(c!=null)
+            {
+                c.Close();
+                //弹出一个窗口告诉他，已经有server了，问你是否要加入他
+                Debug.Log("已经有server了");
+            }
         }
         catch(Exception e)
         {
             Debug.Log(e.Message);
+            Server s = Instantiate(serverPrefab).GetComponent<Server>();
+            s.Init();
+
+            Client c = Instantiate(clientPrefab).GetComponent<Client>();
+            c.clientName = "host";
+            c.ConnectToServer("192.168.0.107", 6321);
         }
     }
 
@@ -82,7 +91,7 @@ public class _GameManager : MonoBehaviour {
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        //SceneManager.LoadScene("Game");
         
         if (GameObject.FindObjectOfType<Server>())
             isMyturn = true;

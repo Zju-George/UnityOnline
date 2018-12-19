@@ -6,7 +6,10 @@ using System;
 using System.Net;
 using System.IO;
 
-public class Server : MonoBehaviour {
+
+
+public class Server : MonoBehaviour
+{
 
     public int port = 6321;
 
@@ -31,7 +34,7 @@ public class Server : MonoBehaviour {
             serverStarted = true;
             StartListening();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.Log("Socket error: " + e.Message);
         }
@@ -41,19 +44,27 @@ public class Server : MonoBehaviour {
         if (!serverStarted)
             return;
 
-        foreach(ServerClient c in clients)
+
+        foreach (ServerClient c in clients)
         {
             //Is the client still connected?
-            if(!IsConnected(c.tcp))
+            if (!IsConnected(c.tcp))
             {
-                c.tcp.Close();
+                try
+                {
+                    c.tcp.Close();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
                 disconnectList.Add(c);
                 continue;
             }
             else
             {
                 NetworkStream s = c.tcp.GetStream();
-                if(s.DataAvailable)
+                if (s.DataAvailable)
                 {
                     StreamReader reader = new StreamReader(s, true);
                     string data = reader.ReadLine();
@@ -64,18 +75,18 @@ public class Server : MonoBehaviour {
             }
         }
 
-        if(disconnectList.Count>0)
+        if (disconnectList.Count > 0)
         {
             BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步在线人数
-            
+
         }
-        for(int i=0;i<disconnectList.Count-1;i++)
+        for (int i = 0; i < disconnectList.Count; i++)
         {
             //Tell our player somebody has disconnected
 
             clients.Remove(disconnectList[i]);
-            ServerClient sc = disconnectList[i];
-            sc.tcp.Close();//不然一直发消息
+            //ServerClient sc = disconnectList[i];
+            //sc.tcp.Close();//不然一直发消息
             disconnectList.RemoveAt(i);
 
         }
@@ -84,19 +95,21 @@ public class Server : MonoBehaviour {
 
     }
     //Server Write s
-    private void BroadCast(string data,List<ServerClient> c1)
+    private void BroadCast(string data, List<ServerClient> c1)
     {
-        foreach(ServerClient sc in c1)
+        foreach (ServerClient sc in c1)
         {
+            if (!IsConnected(sc.tcp))
+                return;
             try
             {
                 StreamWriter writer = new StreamWriter(sc.tcp.GetStream());
                 writer.WriteLine(data);
                 writer.Flush();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Debug.Log("Write error: " + e.Message);
+                Debug.LogError("Write error: " + e.Message);
             }
         }
     }
@@ -111,7 +124,7 @@ public class Server : MonoBehaviour {
         Debug.Log("Server has received a message : " + data);
         string[] aData = data.Split('|');
 
-        switch(aData[0])
+        switch (aData[0])
         {
             case "CWHO":
                 c.clientName = aData[1];
@@ -119,16 +132,16 @@ public class Server : MonoBehaviour {
                 break;
             case "CRUN":
                 data = data.Replace('C', 'S');
-                BroadCast(data,clients);
+                BroadCast(data, clients);
                 break;
         }
-        
+
     }
 
     private void StartListening()
     {
-        server.BeginAcceptTcpClient(AcceptTcpClient,server);
-        
+        server.BeginAcceptTcpClient(AcceptTcpClient, server);
+
     }
 
     private void AcceptTcpClient(IAsyncResult ar)
@@ -140,7 +153,7 @@ public class Server : MonoBehaviour {
         }
 
         TcpListener listener = (TcpListener)ar.AsyncState;
-        
+
         if (listener == server)
         {
             //Debug.Log("this listener is the server");
@@ -154,8 +167,8 @@ public class Server : MonoBehaviour {
         ServerClient sc = new ServerClient(listener.EndAcceptTcpClient(ar));
         clients.Add(sc);
 
-        BroadCast("SWHO|"+allUsers, clients[clients.Count - 1]);
-        BroadCast("SNUM|"+ clients.Count.ToString(), clients);//同步目前连着的人的总数
+        BroadCast("SWHO|" + allUsers, clients[clients.Count - 1]);
+        BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步目前连着的人的总数
         StartListening();
     }
 
