@@ -14,14 +14,17 @@ public class _GameManager : MonoBehaviour {
     public GameObject PlayerNumber;
     public InputField IpInput;
     public InputField PortInput;
-    public int PlayerIndex;//need to be synchronized
+    public int myOnlineCount;//need to be synchronized
     private GameObject Button=null;
 
     public bool isMyturn;
+    private bool duringPing=false;
+    bool isStartGame = false;
+
     private void Start()
     {
         Instance = this;
-        PlayerIndex = 0;
+        myOnlineCount = 0;
         DontDestroyOnLoad(gameObject);
         
     }
@@ -40,6 +43,8 @@ public class _GameManager : MonoBehaviour {
 
             try
         {
+            if (GameObject.FindObjectOfType<Client>())
+                return;
             Client c = Instantiate(clientPrefab).GetComponent<Client>();
             c.clientName = "client";            
             c.ConnectToServer(hostAddress, port);
@@ -53,14 +58,16 @@ public class _GameManager : MonoBehaviour {
 
     public void OnClickHost()
     {
+        duringPing = true;
+        Invoke("setPingFalse", 1.0f);
         try
         {
             TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();
             if(c!=null)
             {
                 c.Close();
-                //弹出一个窗口告诉他，已经有server了，问你是否要加入他
-                Debug.Log("已经有server了");
+                //弹出一个窗口告诉他，已经有server了
+                GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
             }
         }
         catch(Exception e)
@@ -74,11 +81,15 @@ public class _GameManager : MonoBehaviour {
             c.ConnectToServer("192.168.0.107", 6321);
         }
     }
-
+    public void setPingFalse()
+    {
+        duringPing = false;
+    }
     private void Update()
     {
+        
         if(PlayerNumber!=null)
-            PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + PlayerIndex.ToString();
+            PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
         //Debug.Log(isMyturn);
         if (Button == null&&GameObject.Find("Button") != null)
         {
@@ -86,13 +97,21 @@ public class _GameManager : MonoBehaviour {
             Button = GameObject.Find("Button");
             Button.GetComponent<Button>().onClick.AddListener(RunMyTurn);
         }
-
+        if (myOnlineCount == 2 && !duringPing && !isStartGame)
+        {
+            myStartGame();
+        }
     }
 
-    public void StartGame()
+    public void myStartGame()
     {
+        isStartGame = true;
+        //choose if I am white or black 
+        GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
+        GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ConfirmButton").gameObject.SetActive(false);
+        GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(true);
         //SceneManager.LoadScene("Game");
-        
+
         if (GameObject.FindObjectOfType<Server>())
             isMyturn = true;
         else

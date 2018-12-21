@@ -15,13 +15,18 @@ public class Server : MonoBehaviour
 
     List<ServerClient> clients;
     List<ServerClient> disconnectList;
+    List<ServerClient> WhiteList;
 
     private TcpListener server;
     private bool serverStarted;
+    private bool isGetChooseMessage = false;
+
+
     private void Awake()
     {
         clients = new List<ServerClient>();
         disconnectList = new List<ServerClient>();
+        WhiteList = new List<ServerClient>();
     }
     public void Init()
     {
@@ -75,11 +80,8 @@ public class Server : MonoBehaviour
             }
         }
 
-        if (disconnectList.Count > 0)
-        {
-            BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步在线人数
+        BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步在线人数
 
-        }
         for (int i = 0; i < disconnectList.Count; i++)
         {
             //Tell our player somebody has disconnected
@@ -91,7 +93,7 @@ public class Server : MonoBehaviour
 
         }
 
-        _GameManager.Instance.PlayerIndex = clients.Count;
+        _GameManager.Instance.myOnlineCount = clients.Count;
 
     }
     //Server Write s
@@ -121,18 +123,26 @@ public class Server : MonoBehaviour
     //Server Read
     private void OnInComingData(ServerClient c, string data)
     {
-        Debug.Log("Server has received a message : " + data);
-        string[] aData = data.Split('|');
+        //Debug.Log("Server has received a message : " + data);
+        string[] aData = data.Split('|'); 
 
         switch (aData[0])
         {
             case "CWHO":
                 c.clientName = aData[1];
-                BroadCast("SCNN|" + c.clientName, clients);//Server Broadcast to clients that who has joined the game;
+                //BroadCast("SCNN|" + c.clientName, clients);//Server Broadcast to clients that who has joined the game;
                 break;
             case "CRUN":
                 data = data.Replace('C', 'S');
                 BroadCast(data, clients);
+                break;
+            case "CChoose":
+                if (isGetChooseMessage)
+                    return;
+                isGetChooseMessage = true;
+                string name = aData[2];
+                string side = aData[1];
+                Debug.Log("Server recieve a message from: " + name + " he choose "+side);
                 break;
         }
 

@@ -83,22 +83,13 @@ public class Client : MonoBehaviour
 
     private List<GameClient> players = new List<GameClient>();
 
-    //static AutoResetEvent objAuto = new AutoResetEvent(false);
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        //Thread thread = new Thread(new ThreadStart(Set));
-        //thread.Start();
-        //objAuto.WaitOne();
-
     }
 
-    //protected void Set()
-    //{
-    //    MessageBoxButtons messButton = MessageBoxButtons.OKCancel;
-    //    DialogResult dr = MessageBox.Show("确定要退出吗?", "退出系统", messButton);
-    //    objAuto.Set();
-    //}
+
     public bool ConnectToServer(string host, int port)
     {
         if (socketReady)
@@ -183,7 +174,7 @@ public class Client : MonoBehaviour
                 {
                     UserConnected(aData[i]);//why it's not a a host
                 }
-                Send("CWHO|" + clientName);
+                //Send("CWHO|" + clientName);
                 break;
             case "SCNN":
                 UserConnected(aData[1]);
@@ -191,9 +182,9 @@ public class Client : MonoBehaviour
             case "SNUM":
                 int num;
                 int.TryParse(aData[1], out num);
-                _GameManager.Instance.PlayerIndex = num;
-                if (num == 2)
-                    _GameManager.Instance.PlayerIndex = num;
+                _GameManager.Instance.myOnlineCount = num;
+                //if (num == 2)
+                //    _GameManager.Instance.OnlineCount = num;
                 break;
             case "SRUN":
                 if (clientName == aData[1])
@@ -214,9 +205,9 @@ public class Client : MonoBehaviour
             name = name
         };
         players.Add(c);
-        Debug.Log("playerNum" + players.Count);
-        if (players.Count == 2)
-            _GameManager.Instance.StartGame();
+        //Debug.Log("playerNum" + players.Count);
+        //if (players.Count == 2)
+        //    _GameManager.Instance.StartGame();
     }
 
     public void CloseSocket()
