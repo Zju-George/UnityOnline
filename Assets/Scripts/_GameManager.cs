@@ -11,10 +11,13 @@ public class _GameManager : MonoBehaviour {
 
     public GameObject serverPrefab;
     public GameObject clientPrefab;
-    public GameObject PlayerNumber;
-    public InputField IpInput;
-    public InputField PortInput;
+    private GameObject PlayerNumber;
+    private InputField IpInput=null;
+    private InputField PortInput=null;
+
     public int myOnlineCount;//need to be synchronized
+    public string side = null;
+
     private GameObject Button=null;
 
     public bool isMyturn;
@@ -32,6 +35,8 @@ public class _GameManager : MonoBehaviour {
     {
         string hostAddress = "192.168.0.107";//192.168.0.107，115.195.87.182
         int port=6321;
+        IpInput = GameObject.Find("Canvas").transform.Find("IpInput").GetComponent<InputField>();
+        PortInput = GameObject.Find("Canvas").transform.Find("PortInput").GetComponent<InputField>();
         if (IpInput.text != "")
         {
             hostAddress = IpInput.text;
@@ -58,6 +63,8 @@ public class _GameManager : MonoBehaviour {
 
     public void OnClickHost()
     {
+        if (GameObject.FindObjectOfType<Server>())
+            return;
         duringPing = true;
         Invoke("setPingFalse", 1.0f);
         try
@@ -87,9 +94,11 @@ public class _GameManager : MonoBehaviour {
     }
     private void Update()
     {
-        
-        if(PlayerNumber!=null)
+        PlayerNumber = GameObject.Find("Canvas").transform.Find("PlayerNumberText").gameObject;
+        if (PlayerNumber!=null)
+        {
             PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
+        }
         //Debug.Log(isMyturn);
         if (Button == null&&GameObject.Find("Button") != null)
         {
@@ -117,6 +126,10 @@ public class _GameManager : MonoBehaviour {
         else
             isMyturn = false;
     }
+    public void OnChooseSide()
+    {
+        GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(false);
+    }
 
     public void RunMyTurn()
     {
@@ -140,4 +153,5 @@ public class _GameManager : MonoBehaviour {
         if (GameObject.Find("ShowTurn"))
             GameObject.Find("ShowTurn").GetComponent<Text>().text = "it is your turn now!";
     }
+    
 }

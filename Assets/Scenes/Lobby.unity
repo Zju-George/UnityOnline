@@ -702,10 +702,10 @@ MonoBehaviour:
     type: 2}
   clientPrefab: {fileID: 1032210641191570, guid: f38c425b571767f498397232e00d8d98,
     type: 2}
-  PlayerNumber: {fileID: 1130114271}
   IpInput: {fileID: 1468142247}
   PortInput: {fileID: 1528634980}
   myOnlineCount: 0
+  side: 
   isMyturn: 0
 --- !u!1 &635199177
 GameObject:
@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 1130114274}
   - component: {fileID: 1130114273}
   m_Layer: 5
-  m_Name: Text
+  m_Name: PlayerNumberText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1290,7 +1290,7 @@ GameObject:
   - component: {fileID: 1468142248}
   - component: {fileID: 1468142247}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: IpInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1645,7 +1645,7 @@ GameObject:
   - component: {fileID: 1528634981}
   - component: {fileID: 1528634980}
   m_Layer: 5
-  m_Name: InputField (1)
+  m_Name: PortInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

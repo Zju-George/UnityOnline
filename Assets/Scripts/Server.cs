@@ -6,7 +6,7 @@ using System;
 using System.Net;
 using System.IO;
 
-
+//? 待解决： 让client 自己输入姓名时需要保证不重复，因为我们后面信息同步不是根据id而是根据 姓名
 
 public class Server : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class Server : MonoBehaviour
 
     private TcpListener server;
     private bool serverStarted;
-    private bool isGetChooseMessage = false;
+    private bool isGetChooseMessage = false; //? 目前就2个人，所以一方选了就直接设置为 true 。实际应该是选一方的人满，其他人就不能选择了
 
 
     private void Awake()
@@ -28,22 +28,7 @@ public class Server : MonoBehaviour
         disconnectList = new List<ServerClient>();
         WhiteList = new List<ServerClient>();
     }
-    public void Init()
-    {
 
-        DontDestroyOnLoad(gameObject);
-        try
-        {
-            server = new TcpListener(IPAddress.Any, port);
-            server.Start();
-            serverStarted = true;
-            StartListening();
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Socket error: " + e.Message);
-        }
-    }
     private void Update()
     {
         if (!serverStarted)
@@ -80,8 +65,6 @@ public class Server : MonoBehaviour
             }
         }
 
-        BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步在线人数
-
         for (int i = 0; i < disconnectList.Count; i++)
         {
             //Tell our player somebody has disconnected
@@ -95,6 +78,35 @@ public class Server : MonoBehaviour
 
         _GameManager.Instance.myOnlineCount = clients.Count;
 
+    }
+
+    /*            synchronize online player        */
+    void SynchronizePlayer()
+    {
+        if (!serverStarted)
+            return;
+        BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步在线人数
+    }
+    /*                      */
+
+    public void Init()
+    {
+
+        DontDestroyOnLoad(gameObject);
+        try
+        {
+            server = new TcpListener(IPAddress.Any, port);
+            server.Start();
+            serverStarted = true;
+            StartListening();
+
+            //开启同步
+            InvokeRepeating("SynchronizePlayer", 1f, 1f);
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Socket error: " + e.Message);
+        }
     }
     //Server Write s
     private void BroadCast(string data, List<ServerClient> c1)
@@ -129,8 +141,14 @@ public class Server : MonoBehaviour
         switch (aData[0])
         {
             case "CWHO":
-                c.clientName = aData[1];
-                //BroadCast("SCNN|" + c.clientName, clients);//Server Broadcast to clients that who has joined the game;
+                foreach(ServerClient sc in clients)
+                {
+                    if (sc.id == aData[1])
+                    {
+                        sc.clientName = aData[2];
+                        Debug.Log("设置sc.clientName: " + aData[2]);
+                    }
+                }
                 break;
             case "CRUN":
                 data = data.Replace('C', 'S');
@@ -142,7 +160,13 @@ public class Server : MonoBehaviour
                 isGetChooseMessage = true;
                 string name = aData[2];
                 string side = aData[1];
-                Debug.Log("Server recieve a message from: " + name + " he choose "+side);
+                if(GetServerClient(name)!=null)
+                {
+                    if (side == "White")
+                        WhiteList.Add(GetServerClient(name));
+                    Debug.Log(GetServerClient(name).clientName + " choose " + side);
+                    BroadCast("SChoose|" + side + "|" + name,clients);
+                }     
                 break;
         }
 
@@ -156,12 +180,6 @@ public class Server : MonoBehaviour
 
     private void AcceptTcpClient(IAsyncResult ar)
     {
-        string allUsers = "";
-        foreach (ServerClient i in clients)
-        {
-            allUsers += i.clientName + '|';
-        }
-
         TcpListener listener = (TcpListener)ar.AsyncState;
 
         if (listener == server)
@@ -174,10 +192,11 @@ public class Server : MonoBehaviour
             Debug.Log("this Listener is not the server");
         }
 
-        ServerClient sc = new ServerClient(listener.EndAcceptTcpClient(ar));
+        string UniqueId = System.Guid.NewGuid().ToString();
+        ServerClient sc = new ServerClient(listener.EndAcceptTcpClient(ar),UniqueId);
         clients.Add(sc);
 
-        BroadCast("SWHO|" + allUsers, clients[clients.Count - 1]);
+        BroadCast("SWHO|" + UniqueId, sc);//clients[clients.Count -1]可以替换为sc
         BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步目前连着的人的总数
         StartListening();
     }
@@ -203,6 +222,25 @@ public class Server : MonoBehaviour
             return false;
         }
     }
+
+    private ServerClient GetServerClient(string name)
+    {
+        ServerClient result = null;
+        bool isFind = false;
+        foreach(ServerClient sc in clients)
+        {
+            if(sc.clientName==name)
+            {
+                isFind = true;
+                result = sc;
+            }
+        }
+        if(!isFind)
+        {
+            Debug.LogError("ServerClient " + name + " not EXIST!");
+        }
+        return result;
+    }
 }
 
 public class ServerClient
@@ -210,8 +248,10 @@ public class ServerClient
     public string clientName;
     public TcpClient tcp;
 
-    public ServerClient(TcpClient tcp)
+    public string id;
+    public ServerClient(TcpClient tcp,string id)
     {
         this.tcp = tcp;
+        this.id = id;
     }
 }

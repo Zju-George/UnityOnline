@@ -73,8 +73,8 @@ public class Client : MonoBehaviour
         }
     }
     public string clientName;
-
-
+    string id;
+    
     private bool socketReady;
     private TcpClient socket;
     private NetworkStream stream;
@@ -139,7 +139,7 @@ public class Client : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(socket.Connected + clientName);
+        //Debug.Log(socket.Connected + clientName);
         if (socketReady)
         {
             if (stream.DataAvailable)
@@ -170,21 +170,27 @@ public class Client : MonoBehaviour
         switch (aData[0])
         {
             case "SWHO":
-                for (int i = 1; i < aData.Length - 1; i++)
-                {
-                    UserConnected(aData[i]);//why it's not a a host
-                }
-                //Send("CWHO|" + clientName);
-                break;
-            case "SCNN":
-                UserConnected(aData[1]);
+                id = aData[1];
+                Send("CWHO|" + id + "|" + clientName);
                 break;
             case "SNUM":
                 int num;
                 int.TryParse(aData[1], out num);
                 _GameManager.Instance.myOnlineCount = num;
-                //if (num == 2)
-                //    _GameManager.Instance.OnlineCount = num;
+                break;
+            case "SChoose":
+                if(clientName==aData[2])
+                {
+                    _GameManager.Instance.side = aData[1];
+                }
+                else
+                {
+                    if (aData[1] == "White")
+                        _GameManager.Instance.side = "Black";
+                    else
+                        _GameManager.Instance.side = "White";
+                }
+                _GameManager.Instance.OnChooseSide();
                 break;
             case "SRUN":
                 if (clientName == aData[1])
@@ -197,19 +203,6 @@ public class Client : MonoBehaviour
                 break;
         }
     }
-
-    private void UserConnected(string name)
-    {
-        GameClient c = new GameClient
-        {
-            name = name
-        };
-        players.Add(c);
-        //Debug.Log("playerNum" + players.Count);
-        //if (players.Count == 2)
-        //    _GameManager.Instance.StartGame();
-    }
-
     public void CloseSocket()
     {
         if (!socketReady)
