@@ -72,9 +72,11 @@ public class _GameManager : MonoBehaviour {
             TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();
             if(c!=null)
             {
+                
                 c.Close();
                 //弹出一个窗口告诉他，已经有server了
                 GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
+                
             }
         }
         catch(Exception e)
@@ -85,7 +87,7 @@ public class _GameManager : MonoBehaviour {
 
             Client c = Instantiate(clientPrefab).GetComponent<Client>();
             c.clientName = "host";
-            c.ConnectToServer("192.168.0.107", 6321);
+            c.ConnectToServer("192.168.0.107", 6321);//localhost
         }
     }
     public void setPingFalse()
@@ -95,10 +97,7 @@ public class _GameManager : MonoBehaviour {
     private void Update()
     {
         PlayerNumber = GameObject.Find("Canvas").transform.Find("PlayerNumberText").gameObject;
-        if (PlayerNumber!=null)
-        {
-            PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
-        }
+        PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
         //Debug.Log(isMyturn);
         if (Button == null&&GameObject.Find("Button") != null)
         {
@@ -129,7 +128,26 @@ public class _GameManager : MonoBehaviour {
     public void OnChooseSide()
     {
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(false);
+        StartCoroutine(CountDown());
     }
+    IEnumerator CountDown()
+    {
+        GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("CountDownText").gameObject.SetActive(true);
+        Text countdown = GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("CountDownText").GetComponent<Text>();
+        countdown.text = "You get " + side + " side!";
+        yield return new WaitForSeconds(1f);
+        countdown.text = "Game will Start in...";
+        yield return new WaitForSeconds(0.5f);
+        countdown.fontSize = 200;
+        countdown.text = "3";
+        yield return new WaitForSeconds(1f);
+        countdown.text = "2";
+        yield return new WaitForSeconds(1f);
+        countdown.text = "1";
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("Game");
+    }
+
 
     public void RunMyTurn()
     {
