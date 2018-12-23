@@ -1,0 +1,33 @@
+# 5v5 #
+---	
+- before the battle begin
+	- every player choose a place he wants in the restricted area
+		- a team have 3 kinds of place: 
+			- 2 in front of the team
+			- 1 middle of the team 
+			- 2  behind the team 
+		- if the player chooses the place in front of the team
+			- he will take 20% extra  AOE damage
+			- he will cause 4% more single-target harm
+		- if the player chooses the palace middle of the team
+			- he will enhance 10% team buff
+		- if the player chooses the palace behind the team
+			- he will take 25% less AOE damage
+			- he will cause 5% less single-target/AOE harm
+# 3v3 #
+---	
+- before the battle begin
+	- every player choose a place he wants in the restricted area
+		- a team have 3 kinds of place: 
+			- 1 in front of the team
+			- 1 middle of the team 
+			- 1  behind the team 
+		- if the player chooses the place in front of the team
+			- he will take 20% extra  AOE damage
+			- he will cause 4% more single-target harm
+		- if the player chooses the palace middle of the team
+			- he will enhance 10% team buff
+		- if the player chooses the palace behind the team
+			- he will take 25% less AOE damage
+			- he will cause 5% less single-target/AOE harm
+				
