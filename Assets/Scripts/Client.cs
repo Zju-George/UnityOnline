@@ -87,7 +87,7 @@ public class Client : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        InvokeRepeating("Destroy", 0.1f, 1f);
+        InvokeRepeating("Destroy", 0.5f, 1f);
     }
 
 
