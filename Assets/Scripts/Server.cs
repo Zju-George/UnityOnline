@@ -27,6 +27,7 @@ public class Server : MonoBehaviour
         clients = new List<ServerClient>();
         disconnectList = new List<ServerClient>();
         WhiteList = new List<ServerClient>();
+        //InvokeRepeating("SychronizePlayer", 0f, 0.1f);
     }
 
     private void Update()
@@ -76,16 +77,22 @@ public class Server : MonoBehaviour
 
         }
 
-        _GameManager.Instance.myOnlineCount = clients.Count;
-
+        //_GameManager.Instance.myOnlineCount = clients.Count;
+        SynchronizePlayer();
     }
 
     /*            synchronize online player        */
-    void SynchronizePlayer()
+    public void SynchronizePlayer()
     {
         if (!serverStarted)
             return;
-        BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步在线人数
+        int OnlineNumber = 0;
+        foreach(ServerClient sc in clients)
+        {
+            if (sc.clientName != null)
+                OnlineNumber += 1; 
+        }
+        BroadCast("SNUM|" + OnlineNumber.ToString(), clients);//同步在线人数
     }
     /*                      */
 
@@ -197,7 +204,8 @@ public class Server : MonoBehaviour
         clients.Add(sc);
 
         BroadCast("SWHO|" + UniqueId, sc);//clients[clients.Count -1]可以替换为sc
-        BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步目前连着的人的总数
+        //BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步目前连着的人的总数
+        SynchronizePlayer();
         StartListening();
     }
 
@@ -245,7 +253,7 @@ public class Server : MonoBehaviour
 
 public class ServerClient
 {
-    public string clientName;
+    public string clientName=null;
     public TcpClient tcp;
 
     public string id;

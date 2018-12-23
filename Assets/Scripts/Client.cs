@@ -87,6 +87,7 @@ public class Client : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        InvokeRepeating("Destroy", 0.1f, 1f);
     }
 
 
@@ -94,6 +95,7 @@ public class Client : MonoBehaviour
     {
         if (socketReady)
             return false;
+        
         try
         {
             //socket = new TcpClient(host, port);
@@ -129,6 +131,7 @@ public class Client : MonoBehaviour
             else
             {
                 Debug.Log("client not connected");//we can set the delay 
+                
             }
         }
         catch (Exception e)
@@ -152,6 +155,7 @@ public class Client : MonoBehaviour
                 }
             }
         }
+        
     }
     public void Send(string data)
     {
@@ -220,6 +224,16 @@ public class Client : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        CloseSocket();
+    }
+
+    public void Destroy()
+    {
+        if(!socketReady)
+            GameObject.Destroy(gameObject);
+    }
+    private void OnDestroy()
     {
         CloseSocket();
     }
