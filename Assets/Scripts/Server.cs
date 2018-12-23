@@ -93,6 +93,7 @@ public class Server : MonoBehaviour
                 OnlineNumber += 1; 
         }
         BroadCast("SNUM|" + OnlineNumber.ToString(), clients);//同步在线人数
+        _GameManager.Instance.myOnlineCount = OnlineNumber;
     }
     /*                      */
 

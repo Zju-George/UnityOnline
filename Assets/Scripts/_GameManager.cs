@@ -20,7 +20,6 @@ public class _GameManager : MonoBehaviour {
 
     private GameObject Button=null;
 
-    public bool isMyturn;
     private bool duringPing=false;
     bool isStartGame = false;
 
@@ -51,7 +50,7 @@ public class _GameManager : MonoBehaviour {
             if (GameObject.FindObjectOfType<Client>())
                 return;
             Client c = Instantiate(clientPrefab).GetComponent<Client>();
-            c.clientName = "client";            
+            c.clientName = "client"+UnityEngine.Random.Range(0,100).ToString();//暂时先用随机数区分            
             c.ConnectToServer(hostAddress, port);
             
         }
@@ -69,8 +68,8 @@ public class _GameManager : MonoBehaviour {
         Invoke("setPingFalse", 1.0f);
         try
         {
-            TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();
-            if(c!=null)
+            TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();//111.230.56.102,192.168.0.107
+            if (c!=null)
             {
                 
                 c.Close();
@@ -85,9 +84,10 @@ public class _GameManager : MonoBehaviour {
             Server s = Instantiate(serverPrefab).GetComponent<Server>();
             s.Init();
 
-            Client c = Instantiate(clientPrefab).GetComponent<Client>();
-            c.clientName = "host";
-            c.ConnectToServer("192.168.0.107", 6321);//localhost
+            //Client c = Instantiate(clientPrefab).GetComponent<Client>();
+            //c.clientName = "host";
+            //c.ConnectToServer("192.168.0.107", 6321);//localhost
+            //c.ConnectToServer("111.230.56.102", 6321);
         }
     }
     public void setPingFalse()
@@ -99,12 +99,7 @@ public class _GameManager : MonoBehaviour {
         PlayerNumber = GameObject.Find("Canvas").transform.Find("PlayerNumberText").gameObject;
         PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
         //Debug.Log(isMyturn);
-        if (Button == null&&GameObject.Find("Button") != null)
-        {
-            Debug.Log("find button");
-            Button = GameObject.Find("Button");
-            Button.GetComponent<Button>().onClick.AddListener(RunMyTurn);
-        }
+
         if (myOnlineCount == 2 && !duringPing && !isStartGame)
         {
             myStartGame();
@@ -119,11 +114,6 @@ public class _GameManager : MonoBehaviour {
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ConfirmButton").gameObject.SetActive(false);
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(true);
         //SceneManager.LoadScene("Game");
-
-        if (GameObject.FindObjectOfType<Server>())
-            isMyturn = true;
-        else
-            isMyturn = false;
     }
     public void OnChooseSide()
     {
@@ -148,28 +138,4 @@ public class _GameManager : MonoBehaviour {
         SceneManager.LoadScene("Game");
     }
 
-
-    public void RunMyTurn()
-    {
-            if (isMyturn)
-            {
-                Client c = GameObject.FindObjectOfType<Client>();
-                c.Send("CRUN|"+c.clientName);
-                Debug.Log("c.name :" + c.clientName);
-                isMyturn = !isMyturn;
-                GameObject.Find("ShowTurn").GetComponent<Text>().text = "you end up your turn";
-            }
-            else
-            {
-                GameObject.Find("ShowTurn").GetComponent<Text>().text = "it is not your turn";
-                return;
-            }
-    }
-    public void ItsYourTurn()
-    {
-        this.isMyturn = true;
-        if (GameObject.Find("ShowTurn"))
-            GameObject.Find("ShowTurn").GetComponent<Text>().text = "it is your turn now!";
-    }
-    
 }
