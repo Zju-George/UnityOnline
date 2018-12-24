@@ -196,15 +196,6 @@ public class Client : MonoBehaviour
                 }
                 _GameManager.Instance.OnChooseSide();
                 break;
-            case "SRUN":
-                if (clientName == aData[1])
-                {
-                    Debug.Log("你自己刚走了一步，那不要再走了");
-                    _GameManager.Instance.isMyturn = false;
-                }
-                else
-                    _GameManager.Instance.ItsYourTurn();
-                break;
         }
     }
     public void CloseSocket()

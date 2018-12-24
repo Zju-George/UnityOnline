@@ -702,7 +702,6 @@ MonoBehaviour:
     type: 2}
   myOnlineCount: 0
   side: 
-  isMyturn: 0
 --- !u!1 &635199177
 GameObject:
   m_ObjectHideFlags: 0
