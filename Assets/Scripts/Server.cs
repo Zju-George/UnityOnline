@@ -174,6 +174,7 @@ public class Server : MonoBehaviour
                         WhiteList.Add(GetServerClient(name));
                     Debug.Log(GetServerClient(name).clientName + " choose " + side);
                     BroadCast("SChoose|" + side + "|" + name,clients);
+                    _GameManager.Instance.OnChooseSide();   
                 }     
                 break;
         }

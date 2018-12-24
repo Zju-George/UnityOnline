@@ -102,14 +102,15 @@ public class _GameManager : MonoBehaviour {
 
         if (myOnlineCount == 2 && !duringPing && !isStartGame)
         {
-            myStartGame();
+            if(!GameObject.FindObjectOfType<Server>())
+                StartChoose();//client 进入选单
         }
     }
 
-    public void myStartGame()
+    public void StartChoose()
     {
         isStartGame = true;
-        //choose if I am white or black 
+        //choose if I am white or black
         GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ConfirmButton").gameObject.SetActive(false);
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(true);
@@ -135,7 +136,13 @@ public class _GameManager : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         countdown.text = "1";
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("Game");
+        if (!GameObject.FindObjectOfType<Server>())
+            SceneManager.LoadScene("Game");
+        else
+        {
+            yield return new WaitForSeconds(1f);
+            SceneManager.LoadScene("Game");
+        }
     }
 
 }
