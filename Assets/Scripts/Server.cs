@@ -251,6 +251,12 @@ public class Server : MonoBehaviour
         }
         return result;
     }
+
+    public void UpdateTurn()
+    {
+        string s = "SUPDATE" + "|";
+        BroadCast(s,clients);
+    }
 }
 
 public class ServerClient

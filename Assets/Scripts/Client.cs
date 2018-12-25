@@ -4,7 +4,8 @@ using System.IO;
 using System.Net.Sockets;
 using UnityEngine;
 using System.Threading;
-
+using UnityEngine.UI;
+using System.Collections;
 
 public class Client : MonoBehaviour
 {
@@ -196,8 +197,29 @@ public class Client : MonoBehaviour
                 }
                 _GameManager.Instance.OnChooseSide();
                 break;
+            case "SUPDATE":
+                StartCoroutine(CountDown());
+                break;
         }
     }
+    IEnumerator CountDown()
+    {
+        GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(true);
+        Text t = GameObject.Find("Canvas").transform.Find("TurnCountDown").GetComponent<Text>();
+        t.text = "10";
+        for(int i=9;i>=0;i--)
+        {
+            yield return new WaitForSeconds(1f);
+            t.text = i.ToString();
+            if(i==0)
+            {
+                GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(false);
+                yield break;
+            }
+        }
+        
+    }
+
     public void CloseSocket()
     {
         if (!socketReady)
