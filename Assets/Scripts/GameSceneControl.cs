@@ -21,7 +21,11 @@ public class GameSceneControl : MonoBehaviour {
             BlackCamera.SetActive(true);
         }
         else
+        {
             Debug.Log("server Camera");
+            WhiteCamera.SetActive(true);
+            BlackCamera.SetActive(false);
+        }
 	}
 
 }
