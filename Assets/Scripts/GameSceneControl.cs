@@ -25,7 +25,12 @@ public class GameSceneControl : MonoBehaviour {
             Debug.Log("server Camera");
             WhiteCamera.SetActive(true);
             BlackCamera.SetActive(false);
+            if (GameObject.FindObjectOfType<Server>() != null)
+            {
+                GameObject.FindObjectOfType<Server>().UpdateTurn();
+            }
         }
+            
 	}
-
+    
 }
