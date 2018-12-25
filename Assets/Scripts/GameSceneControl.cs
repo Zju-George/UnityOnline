@@ -23,7 +23,7 @@ public class GameSceneControl : MonoBehaviour {
         else
         {
         }
-        if (GameObject.FindObjectsOfType<Server>() != null)
+        if (GameObject.FindObjectOfType<Server>() != null)
         {
             GameObject.FindObjectOfType<Server>().UpdateTurn();
         }
