@@ -25,14 +25,14 @@ public class _GameManager : MonoBehaviour {
 
     private void Start()
     {
+        Screen.SetResolution(1920, 1080, false);
         Instance = this;
         myOnlineCount = 0;
         DontDestroyOnLoad(gameObject);
-        
     }
     public void OnClickConnect()
     {
-        string hostAddress = "localhost";//192.168.0.107，115.195.87.182
+        string hostAddress = "192.168.0.107";//192.168.0.107，115.195.87.182
         int port=6321;
         IpInput = GameObject.Find("Canvas").transform.Find("IpInput").GetComponent<InputField>();
         PortInput = GameObject.Find("Canvas").transform.Find("PortInput").GetComponent<InputField>();
@@ -68,7 +68,7 @@ public class _GameManager : MonoBehaviour {
         Invoke("setPingFalse", 1.0f);
         try
         {
-            TcpClient c = new Client.TcpClientWithTimeout("localhost", 6321, 10).Connect();//111.230.56.102,192.168.0.107
+            TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();//111.230.56.102,192.168.0.107
             if (c!=null)
             {
                 
