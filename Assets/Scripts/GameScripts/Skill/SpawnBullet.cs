@@ -6,6 +6,7 @@ public class SpawnBullet : MonoBehaviour
 {
 
     public GameObject firePoint;
+    public Transform destination;// 射击的终点
     public List<GameObject> vfx = new List<GameObject>();
 
     private GameObject effectToSpawn;
@@ -47,11 +48,9 @@ public class SpawnBullet : MonoBehaviour
     // Update is called once per frame
     public void SpawnVFX()
     {
-        
-        if(firePoint!=null)
-        {
-            GameObject vfx = Instantiate(effectToSpawn, firePoint.transform.position, Quaternion.identity);
-        }
-
+        GameObject vfx = Instantiate(effectToSpawn, firePoint.transform.position, Quaternion.identity);
+        Vector3 direction = destination.position - firePoint.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        vfx.transform.localRotation = rotation;
     }
 }

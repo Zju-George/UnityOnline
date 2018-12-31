@@ -197,28 +197,12 @@ public class Client : MonoBehaviour
                 }
                 _GameManager.Instance.OnChooseSide();
                 break;
-            case "SUPDATE":
-                StartCoroutine(CountDown());
+            case "SUpdate":
+                GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(true);
                 break;
         }
     }
-    IEnumerator CountDown()
-    {
-        GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(true);
-        Text t = GameObject.Find("Canvas").transform.Find("TurnCountDown").GetComponent<Text>();
-        t.text = "10";
-        for(int i=9;i>=0;i--)
-        {
-            yield return new WaitForSeconds(1f);
-            t.text = i.ToString();
-            if(i==0)
-            {
-                GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(false);
-                yield break;
-            }
-        }
-        
-    }
+    
 
     public void CloseSocket()
     {

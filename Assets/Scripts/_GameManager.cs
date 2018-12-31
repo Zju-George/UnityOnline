@@ -18,8 +18,6 @@ public class _GameManager : MonoBehaviour {
     public int myOnlineCount;//need to be synchronized
     public string side = null;
 
-    private GameObject Button=null;
-
     private bool duringPing=false;
     bool isStartGame = false;
 

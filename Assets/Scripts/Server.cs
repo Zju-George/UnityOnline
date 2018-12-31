@@ -254,7 +254,7 @@ public class Server : MonoBehaviour
 
     public void UpdateTurn()
     {
-        string s = "SUPDATE" + "|";
+        string s = "SUpdate" + "|";
         BroadCast(s,clients);
     }
 }
