@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnBullet : MonoBehaviour
+public class WhiteBehaviour : MonoBehaviour
 {
 
     public GameObject firePoint;
@@ -24,7 +24,11 @@ public class SpawnBullet : MonoBehaviour
     }
     private void Update()
     {
-        
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("die_back_rest")&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5)
+        {
+            anim.SetFloat("Speed", -1.0f);
+            return;
+        }
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("shoot_single_ar"))
         {
             if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime>0.3&&!firstShoot)
@@ -52,5 +56,11 @@ public class SpawnBullet : MonoBehaviour
         Vector3 direction = destination.position - firePoint.transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
         vfx.transform.localRotation = rotation;
+    }
+    public void GetDamage()
+    {
+        anim.SetFloat("Speed", 1.5f);
+        anim.SetTrigger("Damage");
+
     }
 }
