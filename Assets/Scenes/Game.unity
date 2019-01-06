@@ -4841,6 +4841,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 1426817923}
+--- !u!1 &339848025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 339848026}
+  m_Layer: 0
+  m_Name: hp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &339848026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339848025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.267, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 466725799}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430367240
 GameObject:
   m_ObjectHideFlags: 0
@@ -4941,7 +4971,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 198482, guid: 6b9bfb73d6796d3428598337f0d0aa6e, type: 3}
       propertyPath: m_Name
-      value: WhiteCharactor
+      value: White
       objectReference: {fileID: 0}
     - target: {fileID: 198482, guid: 6b9bfb73d6796d3428598337f0d0aa6e, type: 3}
       propertyPath: m_TagString
@@ -5071,6 +5101,12 @@ MonoBehaviour:
   destination: {fileID: 1548265808}
   vfx:
   - {fileID: 5477604563764348816, guid: b34ef17e092a50241ab4879554902cff, type: 3}
+--- !u!4 &466725799 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 413756, guid: 6b9bfb73d6796d3428598337f0d0aa6e,
+    type: 3}
+  m_PrefabInstance: {fileID: 466725795}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &477147400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10549,6 +10585,7 @@ GameObject:
   - component: {fileID: 985679501}
   - component: {fileID: 985679500}
   - component: {fileID: 985679499}
+  - component: {fileID: 985679503}
   m_Layer: 0
   m_Name: WhiteCamera
   m_TagString: Untagged
@@ -10628,6 +10665,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 12.635, y: 6.946, z: 2.5670002}
+--- !u!114 &985679503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985679498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1d7e2148e7be044fb3b7d74c260e17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  player: {fileID: 0}
+  HpBarPrefab: {fileID: 1144257593856841319, guid: 9aa0dab55716a964e9df8d7cc578c2cd,
+    type: 3}
 --- !u!1001 &1041702542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15763,7 +15816,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_Name
-      value: BlackCharactor
+      value: Black
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_IsActive

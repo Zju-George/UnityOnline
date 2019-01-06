@@ -30,7 +30,7 @@ public class BlackBehavior : MonoBehaviour
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (var player in players)
         {
-            if (player.name == "WhiteCharactor")
+            if (player.name == "White")
                 player.GetComponent<WhiteBehaviour>().GetDamage();
         }
         yield return new WaitForSeconds(2 / 30.0f);

@@ -11,7 +11,7 @@ public class BulletMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BlackAnimator = GameObject.Find("BlackCharactor").GetComponent<Animator>();
+        BlackAnimator = GameObject.Find("Black").GetComponent<Animator>();
         var muzzleVFX = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
         muzzleVFX.transform.forward = gameObject.transform.forward;
         var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
