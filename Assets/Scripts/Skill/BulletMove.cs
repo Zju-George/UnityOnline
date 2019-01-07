@@ -1,17 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class BulletMove : MonoBehaviour
 {
     public float speed;
     public GameObject muzzlePrefab;
-    public GameObject hitPrefab;
-    public Animator BlackAnimator;
+    public GameObject hitPrefab;//hit vfx
+    public GameObject HitPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        BlackAnimator = GameObject.Find("Black").GetComponent<Animator>();
+        HitPlayer = GameObject.Find("Black");
         var muzzleVFX = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
         muzzleVFX.transform.forward = gameObject.transform.forward;
         var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
@@ -36,16 +38,8 @@ public class BulletMove : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         speed = 0;
-        if (!BlackAnimator.GetCurrentAnimatorStateInfo(0).IsName("Damage"))
-            BlackAnimator.Play("Damage");
-        else
-        {
-            BlackAnimator.Play(BlackAnimator.GetNextAnimatorStateInfo(0).fullPathHash, 0);
-            //BlackAnimator.Update(0);
-            BlackAnimator.CrossFadeInFixedTime("Damage", 0.25f);
-            BlackAnimator.SetTrigger("Damage");
-
-        }
+        Type t = Type.GetType(HitPlayer.name + "Behavior");
+        HitPlayer.GetComponent(t).SendMessage("GetDamage");
 
         ContactPoint contact = collision.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);

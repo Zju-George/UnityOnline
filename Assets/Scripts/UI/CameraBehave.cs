@@ -29,7 +29,7 @@ public class CameraBehave : MonoBehaviour
     {
         GameObject hpbar = Instantiate(HpBarPrefab, canvas);
         hpbar.GetComponent<HpBarBehave>().player = this.player;
-        hpbar.GetComponent<HpBarBehave>().camera = GetComponent<Camera>();
+        hpbar.GetComponent<HpBarBehave>().cam = GetComponent<Camera>();
     }
 
     // Update is called once per frame

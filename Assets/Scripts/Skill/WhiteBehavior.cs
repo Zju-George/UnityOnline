@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WhiteBehaviour : MonoBehaviour
+public class WhiteBehavior : PlayerBehavior
 {
-
     public GameObject firePoint;
     public Transform destination;// 射击的终点
     public List<GameObject> vfx = new List<GameObject>();
@@ -18,10 +18,9 @@ public class WhiteBehaviour : MonoBehaviour
     {
         effectToSpawn = vfx[0];
         anim = GetComponent<Animator>();
-
         //anim.SetTrigger("Shoot");
-        
     }
+
     private void Update()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("die_back_rest")&& anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5)
@@ -49,6 +48,12 @@ public class WhiteBehaviour : MonoBehaviour
         }
 
     }
+
+    internal void OnDamaged(BlackBehavior blackBehavior, object e)
+    {
+        throw new NotImplementedException();
+    }
+
     // Update is called once per frame
     public void SpawnVFX()
     {
@@ -57,10 +62,9 @@ public class WhiteBehaviour : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction);
         vfx.transform.localRotation = rotation;
     }
-    public void GetDamage()
+    public override void OnDamaged(object source, DamageEventArgs e)
     {
         anim.SetFloat("Speed", 1.5f);
         anim.SetTrigger("Damage");
-
     }
 }
