@@ -32,9 +32,4 @@ public class CameraBehave : MonoBehaviour
         hpbar.GetComponent<HpBarBehave>().cam = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

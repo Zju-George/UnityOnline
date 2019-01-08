@@ -10,11 +10,6 @@ public class CountDown : MonoBehaviour
 
     Text t=null;
     IEnumerator coroutine;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        
-    }
 
     private void OnEnable()
     {
@@ -32,11 +27,6 @@ public class CountDown : MonoBehaviour
     {
         StopCoroutine(coroutine);
         t.text = "Wait...";
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     IEnumerator StartCountDown()
     {
@@ -68,6 +58,21 @@ public class CountDown : MonoBehaviour
         verticalLayoutGroup.GetComponent<Animator>().SetTrigger("IsChoosed");
         Invoke("SetInactive", 2);
         //? 调用client 里的一个函数给server 发攻击的消息
+        if (GameObject.FindObjectOfType<Client>() == null)
+        {
+            Debug.Log("没有client！！！");
+        }
+        else
+        {
+            Client c = GameObject.FindObjectOfType<Client>();
+            string oppositeSide;
+            if (_GameManager.Instance.side == "White")
+                oppositeSide = "Black";
+            else
+                oppositeSide = "White";
+            c.Send("CTurn|" + GameSceneControl.TurnNumber.ToString() + "|"
+                + _GameManager.Instance.side + "|" + "Attack|" + oppositeSide);
+        }
     }
     public void OnPressDefend()
     {
@@ -82,15 +87,16 @@ public class CountDown : MonoBehaviour
     }
     void TurnTimeOut()
     {
-        switch(Random.Range(0,2))
-        {
-            case 0:
-                OnPressAttack();
-                break;
-            case 1:
-                OnPressDefend();
-                break;
-        }
+        //switch(Random.Range(0,2))
+        //{
+        //    case 0:
+        //        OnPressAttack();
+        //        break;
+        //    case 1:
+        //        OnPressDefend();
+        //        break;
+        //}
+        OnPressAttack();
     }
 
 }

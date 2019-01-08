@@ -9,18 +9,19 @@ public class HpBarBehave : MonoBehaviour
     /// </summary>
     public GameObject player;
     public Camera cam;
-    public Transform hp;
-    // Start is called before the first frame update
+    private Transform hppos;
+    private RectTransform hp;
     void Start()
     {
+        hp = transform.Find("hp").GetComponent<RectTransform>();
         switch(player.name)
         {
             case "Black":
-                hp = player.transform.Find
-                    ("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/hp");
+                hppos = player.transform.Find
+                    ("Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Neck/Bip001 Head/hppos");
                 break;
             case "White":
-                hp = player.transform.Find("hp");
+                hppos = player.transform.Find("hppos");      
                 break;
         }
         Update();
@@ -29,8 +30,8 @@ public class HpBarBehave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 hpPosition = cam.WorldToScreenPoint(hp.position);
+        Vector3 hpPosition = cam.WorldToScreenPoint(hppos.position);
         transform.position = hpPosition;
-
+        hp.sizeDelta = new Vector2(player.GetComponent<PlayerBehavior>().Hp,hp.sizeDelta.y);
     }
 }

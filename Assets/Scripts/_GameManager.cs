@@ -18,7 +18,7 @@ public class _GameManager : MonoBehaviour {
     public int myOnlineCount;//need to be synchronized
     public string side = null;
 
-    private bool duringPing=false;
+    public bool duringPing=false;
     bool isStartGame = false;
 
     private void Start()
@@ -42,11 +42,13 @@ public class _GameManager : MonoBehaviour {
         {
             int.TryParse(PortInput.text, out port);
         }
-
             try
         {
             if (GameObject.FindObjectOfType<Client>())
+            {
+                GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
                 return;
+            }
             Client c = Instantiate(clientPrefab).GetComponent<Client>();
             c.clientName = "client"+UnityEngine.Random.Range(0,100).ToString();//暂时先用随机数区分            
             c.ConnectToServer(hostAddress, port);
@@ -63,7 +65,7 @@ public class _GameManager : MonoBehaviour {
         if (GameObject.FindObjectOfType<Server>())
             return;
         duringPing = true;
-        Invoke("setPingFalse", 1.0f);
+        Invoke("SetPingFalse", 0.2f);
         try
         {
             TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();//111.230.56.102,192.168.0.107
@@ -72,8 +74,7 @@ public class _GameManager : MonoBehaviour {
                 
                 c.Close();
                 //弹出一个窗口告诉他，已经有server了
-                GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
-                
+                GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);      
             }
         }
         catch(Exception e)
@@ -81,14 +82,9 @@ public class _GameManager : MonoBehaviour {
             Debug.Log(e.Message);
             Server s = Instantiate(serverPrefab).GetComponent<Server>();
             s.Init();
-
-            //Client c = Instantiate(clientPrefab).GetComponent<Client>();
-            //c.clientName = "host";
-            //c.ConnectToServer("192.168.0.107", 6321);//localhost
-            //c.ConnectToServer("111.230.56.102", 6321);
         }
     }
-    public void setPingFalse()
+    public void SetPingFalse()
     {
         duringPing = false;
     }

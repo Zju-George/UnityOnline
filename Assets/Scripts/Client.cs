@@ -82,8 +82,6 @@ public class Client : MonoBehaviour
     private StreamWriter writer;
     private StreamReader reader;
 
-    private List<GameClient> players = new List<GameClient>();
-
 
     private void Start()
     {
@@ -174,11 +172,11 @@ public class Client : MonoBehaviour
 
         switch (aData[0])
         {
-            case "SWHO":
+            case "SWho":
                 id = aData[1];
-                Send("CWHO|" + id + "|" + clientName);
+                Send("CWho|" + id + "|" + clientName);
                 break;
-            case "SNUM":
+            case "SNum":
                 int num;
                 int.TryParse(aData[1], out num);
                 _GameManager.Instance.myOnlineCount = num;
@@ -200,10 +198,32 @@ public class Client : MonoBehaviour
             case "SUpdate":
                 GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(true);
                 break;
+            case "STurn":
+                string turndata = data.Substring(7);//STurn|&
+                Debug.Log(turndata);
+                GameObject.FindObjectOfType<GameSceneControl>().OnHandleTurnMessage(turndata);
+                break;
         }
     }
     
+    public void Destroy()
+    {
+        if(!socketReady)
+            GameObject.Destroy(gameObject);
+    }
 
+    private void OnDestroy()
+    {
+        CloseSocket();
+    }
+    private void OnDisable()
+    {
+        CloseSocket();
+    }
+    private void OnApplicationQuit()
+    {
+        CloseSocket();
+    }
     public void CloseSocket()
     {
         if (!socketReady)
@@ -215,29 +235,5 @@ public class Client : MonoBehaviour
         Debug.Log("被正确关闭了");
     }
 
-    private void OnApplicationQuit()
-    {
-        CloseSocket();
-    }
-
-    private void OnDisable()
-    {
-        CloseSocket();
-    }
-
-    public void Destroy()
-    {
-        if(!socketReady)
-            GameObject.Destroy(gameObject);
-    }
-    private void OnDestroy()
-    {
-        CloseSocket();
-    }
 }
 
-public class GameClient
-{
-    public string name;
-    public bool isHost;
-}

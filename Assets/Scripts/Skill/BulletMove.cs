@@ -8,12 +8,18 @@ public class BulletMove : MonoBehaviour
 {
     public float speed;
     public GameObject muzzlePrefab;
-    public GameObject hitPrefab;//hit vfx
-    public GameObject HitPlayer;
-    // Start is called before the first frame update
+    //hit特效
+    public GameObject hitPrefab;
+
+    public int damage;
+    public int time;
+
+    public GameObject Sender;
+    public GameObject Destination;
+
     void Start()
     {
-        HitPlayer = GameObject.Find("Black");
+        Destination = GameObject.Find("Black");
         var muzzleVFX = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
         muzzleVFX.transform.forward = gameObject.transform.forward;
         var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
@@ -38,8 +44,7 @@ public class BulletMove : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         speed = 0;
-        Type t = Type.GetType(HitPlayer.name + "Behavior");
-        HitPlayer.GetComponent(t).SendMessage("GetDamage");
+        Sender.GetComponent<PlayerBehavior>().OnCauseDamage(damage);
 
         ContactPoint contact = collision.contacts[0];
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
@@ -56,8 +61,24 @@ public class BulletMove : MonoBehaviour
             Destroy(hitVFX, psChild.main.duration);
         }
 
-
-
+        if(time ==Sender.GetComponent<PlayerBehavior>().Damages.Count)
+        {  
+            Transform[] sons = GetComponentsInChildren<Transform>();
+            foreach(var son in sons)
+            {
+                son.gameObject.SetActive(false);
+            }
+            Invoke("AttackFinish", 1f);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void AttackFinish()
+    {
+        Sender.GetComponent<PlayerBehavior>().OnAttakFinished();
         Destroy(gameObject);
     }
 }
+

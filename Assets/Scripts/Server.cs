@@ -6,36 +6,45 @@ using System;
 using System.Net;
 using System.IO;
 
-//? 待解决： 让client 自己输入姓名时需要保证不重复，因为我们后面信息同步不是根据id而是根据 姓名
+//? 待解决： 让client 自己输入姓名时需要保证不重复，因为我们后面信息同步不是根据id而是根据 姓名，所以需要向server求证姓名是否被用过
 
 public class Server : MonoBehaviour
 {
 
-    public int port = 6321;
+    public string BlackBuffer = "";
+    public string WhiteBuffer = "";
 
     List<ServerClient> clients;
     List<ServerClient> disconnectList;
     List<ServerClient> WhiteList;
 
+    private int port = 6321;
     private TcpListener server;
     private bool serverStarted;
     private bool isGetChooseMessage = false; //? 目前就2个人，所以一方选了就直接设置为 true 。实际应该是选一方的人满，其他人就不能选择了
+    private bool isTurnMessageSend = false;
+    private float turnTime = 10.5f;
 
-
+    private void OnApplicationQuit()
+    {
+        server.Stop();
+    }
     private void Awake()
     {
         clients = new List<ServerClient>();
         disconnectList = new List<ServerClient>();
         WhiteList = new List<ServerClient>();
-        //InvokeRepeating("SychronizePlayer", 0f, 0.1f);
     }
-
+    
     private void Update()
     {
         if (!serverStarted)
             return;
-
-
+        if(clients.Count==0)
+        {
+            SynchronizePlayer();
+            return;
+        }
         foreach (ServerClient c in clients)
         {
             //Is the client still connected?
@@ -74,11 +83,9 @@ public class Server : MonoBehaviour
             //ServerClient sc = disconnectList[i];
             //sc.tcp.Close();//不然一直发消息
             disconnectList.RemoveAt(i);
-
+            SynchronizePlayer();
         }
 
-        //_GameManager.Instance.myOnlineCount = clients.Count;
-        SynchronizePlayer();
     }
 
     /*            synchronize online player        */
@@ -92,7 +99,7 @@ public class Server : MonoBehaviour
             if (sc.clientName != null)
                 OnlineNumber += 1; 
         }
-        BroadCast("SNUM|" + OnlineNumber.ToString(), clients);//同步在线人数
+        BroadCast("SNum|" + OnlineNumber.ToString(), clients);//同步在线人数
         _GameManager.Instance.myOnlineCount = OnlineNumber;
     }
     /*                      */
@@ -148,7 +155,7 @@ public class Server : MonoBehaviour
 
         switch (aData[0])
         {
-            case "CWHO":
+            case "CWho":
                 foreach(ServerClient sc in clients)
                 {
                     if (sc.id == aData[1])
@@ -157,10 +164,6 @@ public class Server : MonoBehaviour
                         Debug.Log("设置sc.clientName: " + aData[2]);
                     }
                 }
-                break;
-            case "CRUN":
-                data = data.Replace('C', 'S');
-                BroadCast(data, clients);
                 break;
             case "CChoose":
                 if (isGetChooseMessage)
@@ -177,14 +180,59 @@ public class Server : MonoBehaviour
                     _GameManager.Instance.OnChooseSide();   
                 }     
                 break;
+            case "CTurn":
+                OnHandleTurn(data);
+                break;
         }
+    }
 
+    private void OnHandleTurn(string data)
+    {
+        string afterProcess = "&";
+        string[] aData = data.Split('|');
+        string side = aData[2];
+        string type = aData[3];
+        if (type == "Attack")
+        {
+            int damage = UnityEngine.Random.Range(1, 20);
+            //! &轮数+攻击方+攻击+被攻击方+数值            
+            afterProcess += aData[1] + "|" + aData[2] + "|" + aData[3] + "|" + aData[4] + "|" + damage.ToString();
+        }
+        if (type == "Defend")
+        {
+            //nothing happen right now
+        }
+        if (side == "White")
+        {
+            WhiteBuffer += afterProcess;     
+        }
+        if (side == "Black")
+        {
+            BlackBuffer += afterProcess;
+        }
+        CheckBuffer();
+    }
+
+    private void CheckBuffer()
+    {
+        if (WhiteBuffer != "" && BlackBuffer != "")
+        {
+            //整合消息(默认白色行动在前）
+            string TurnMessage = "STurn" + "|";
+            TurnMessage += WhiteBuffer;
+            TurnMessage += BlackBuffer;
+            Debug.Log(TurnMessage);
+            //发送消息(把buffer置于null)
+            BroadCast(TurnMessage, clients);
+            isTurnMessageSend = true;
+            WhiteBuffer = "";
+            BlackBuffer = "";
+        }
     }
 
     private void StartListening()
     {
         server.BeginAcceptTcpClient(AcceptTcpClient, server);
-
     }
 
     private void AcceptTcpClient(IAsyncResult ar)
@@ -205,7 +253,7 @@ public class Server : MonoBehaviour
         ServerClient sc = new ServerClient(listener.EndAcceptTcpClient(ar),UniqueId);
         clients.Add(sc);
 
-        BroadCast("SWHO|" + UniqueId, sc);//clients[clients.Count -1]可以替换为sc
+        BroadCast("SWho|" + UniqueId, sc);//clients[clients.Count -1]可以替换为sc
         //BroadCast("SNUM|" + clients.Count.ToString(), clients);//同步目前连着的人的总数
         SynchronizePlayer();
         StartListening();
@@ -256,6 +304,25 @@ public class Server : MonoBehaviour
     {
         string s = "SUpdate" + "|";
         BroadCast(s,clients);
+        Invoke("ForceTurnMessage", turnTime);
+    }
+    public void ForceTurnMessage()
+    {
+        if(!isTurnMessageSend)
+        {
+            if (WhiteBuffer == "")
+            {
+                Debug.Log("WhiteBuffer为空");
+                WhiteBuffer = "&-1|White|Attack|Black|1";
+            }
+            if (BlackBuffer == "")
+            {
+                Debug.Log("BlackBuffer为空");
+                BlackBuffer = "&-1|Black|Attack|White|1";
+            }
+            CheckBuffer();
+        }
+        isTurnMessageSend = false;
     }
 }
 
