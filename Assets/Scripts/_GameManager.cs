@@ -8,13 +8,14 @@ using System.Net.Sockets;
 
 public class _GameManager : MonoBehaviour {
     public static _GameManager Instance { set; get; }
-
+    public static bool isNoDestroyHandler = true;
     public GameObject serverPrefab;
+    private GameObject PlayerNumberText;
+#if CLIENT
     public GameObject clientPrefab;
-    private GameObject PlayerNumber;
     private InputField IpInput=null;
     private InputField PortInput=null;
-
+#endif
     public int myOnlineCount;//need to be synchronized
     public string side = null;
 
@@ -23,11 +24,60 @@ public class _GameManager : MonoBehaviour {
 
     private void Start()
     {
-        Screen.SetResolution(1920, 1080, false);
+        //Screen.SetResolution(1920, 1080, false);
         Instance = this;
+        isStartGame = false;
         myOnlineCount = 0;
-        DontDestroyOnLoad(gameObject);
+        if(isNoDestroyHandler)
+        {
+            DontDestroyOnLoad(gameObject);
+            isNoDestroyHandler = false;
+        }
+#if SERVER
+        OnClickHost();
+#endif
     }
+    private void Update()
+    {
+        PlayerNumberText = GameObject.Find("Canvas").transform.Find("PlayerNumberText").gameObject;
+        PlayerNumberText.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
+#if CLIENT
+        if (myOnlineCount == 2 && !duringPing && !isStartGame)
+        {
+            if (!GameObject.FindObjectOfType<Server>())
+                StartChoose();//client 进入选单
+        }
+#endif
+    }
+    public void OnClickHost()
+    {
+        if (GameObject.FindObjectOfType<Server>())
+            return;
+        duringPing = true;
+        Invoke("SetPingFalse", 0.2f);
+        try
+        {
+            TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();//111.230.56.102
+            if (c != null)
+            {
+
+                c.Close();
+                //弹出一个窗口告诉他，已经有server了
+                GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            Server s = Instantiate(serverPrefab).GetComponent<Server>();
+            s.Init();
+        }
+    }
+    public void SetPingFalse()
+    {
+        duringPing = false;
+    }
+#if CLIENT
     public void OnClickConnect()
     {
         string hostAddress = "192.168.0.107";//192.168.0.107，115.195.87.182
@@ -59,48 +109,7 @@ public class _GameManager : MonoBehaviour {
             Debug.Log(e.Message);
         }
     }
-
-    public void OnClickHost()
-    {
-        if (GameObject.FindObjectOfType<Server>())
-            return;
-        duringPing = true;
-        Invoke("SetPingFalse", 0.2f);
-        try
-        {
-            TcpClient c = new Client.TcpClientWithTimeout("192.168.0.107", 6321, 10).Connect();//111.230.56.102,192.168.0.107
-            if (c!=null)
-            {
-                
-                c.Close();
-                //弹出一个窗口告诉他，已经有server了
-                GameObject.Find("Canvas").transform.Find("Modal Dialog").gameObject.SetActive(true);      
-            }
-        }
-        catch(Exception e)
-        {
-            Debug.Log(e.Message);
-            Server s = Instantiate(serverPrefab).GetComponent<Server>();
-            s.Init();
-        }
-    }
-    public void SetPingFalse()
-    {
-        duringPing = false;
-    }
-    private void Update()
-    {
-        PlayerNumber = GameObject.Find("Canvas").transform.Find("PlayerNumberText").gameObject;
-        PlayerNumber.GetComponent<Text>().text = "PlayerNumber: " + myOnlineCount.ToString();
-        //Debug.Log(isMyturn);
-
-        if (myOnlineCount == 2 && !duringPing && !isStartGame)
-        {
-            if(!GameObject.FindObjectOfType<Server>())
-                StartChoose();//client 进入选单
-        }
-    }
-
+    
     public void StartChoose()
     {
         isStartGame = true;
@@ -110,16 +119,21 @@ public class _GameManager : MonoBehaviour {
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(true);
         //SceneManager.LoadScene("Game");
     }
+#endif
     public void OnChooseSide()
     {
+#if CLIENT
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("ChooseSide").gameObject.SetActive(false);
+#endif
         StartCoroutine(CountDown());
     }
     IEnumerator CountDown()
     {
+#if CLIENT
         GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("CountDownText").gameObject.SetActive(true);
         Text countdown = GameObject.Find("Canvas").transform.Find("Modal Dialog").Find("CountDownText").GetComponent<Text>();
         countdown.text = "You get " + side + " side!";
+#endif
         yield return new WaitForSeconds(1f);
         countdown.text = "Game will Start in...";
         yield return new WaitForSeconds(0.5f);

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+enum Player
+{
+    White,
+    Black
+}
 public class DamageEventArgs:EventArgs
 {
     public int DamageValue { get; set; }
@@ -12,12 +17,14 @@ public class PlayerBehavior : MonoBehaviour
 {
     [Range(0, 100)]
     public int Hp;
+    [Range(0, 999)]
+    public int Speed;
 
     public List<GameObject> Desitinations = new List<GameObject>();
     public List<int> Damages = new List<int>();
     protected Animator animator;
     protected GameObject DamageTextPrefab;
-    public virtual void OnAttack(object source,EventArgs e) { }
+    public virtual void OnAttack() { }
     /// <summary>
     /// 受到伤害的虚函数，子类放实现，是CauseDamage事件的委托的函数实例
     /// </summary>

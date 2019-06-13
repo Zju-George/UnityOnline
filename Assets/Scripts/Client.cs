@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#if CLIENT
+
+using System;
 using System.IO;
 using System.Net.Sockets;
 using UnityEngine;
 using System.Threading;
-using UnityEngine.UI;
-using System.Collections;
 
 public class Client : MonoBehaviour
 {
@@ -85,6 +84,7 @@ public class Client : MonoBehaviour
 
     private void Start()
     {
+       
         DontDestroyOnLoad(gameObject);
         InvokeRepeating("Destroy", 0.5f, 1f);
     }
@@ -125,6 +125,7 @@ public class Client : MonoBehaviour
                 stream = socket.GetStream();
                 writer = new StreamWriter(stream);
                 reader = new StreamReader(stream);
+                Debug.Log(socket.ReceiveBufferSize);
                 socketReady = true;
             }
             else
@@ -141,7 +142,6 @@ public class Client : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(socket.Connected + clientName);
         if (socketReady)
         {
             if (stream.DataAvailable)
@@ -150,7 +150,6 @@ public class Client : MonoBehaviour
                 if (data != null)
                 {
                     OnIncomingData(data);
-
                 }
             }
         }
@@ -160,7 +159,7 @@ public class Client : MonoBehaviour
     {
         if (!socketReady)
             return;
-
+        
         writer.WriteLine(data);
         writer.Flush();
     }
@@ -196,7 +195,11 @@ public class Client : MonoBehaviour
                 _GameManager.Instance.OnChooseSide();
                 break;
             case "SUpdate":
-                GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(true);
+                if(GameObject.Find("GameSceneControl"))
+                {
+                    Debug.Log("刷新回合");
+                    GameObject.Find("Canvas").transform.Find("TurnCountDown").gameObject.SetActive(true);
+                }
                 break;
             case "STurn":
                 string turndata = data.Substring(7);//STurn|&
@@ -236,4 +239,4 @@ public class Client : MonoBehaviour
     }
 
 }
-
+#endif

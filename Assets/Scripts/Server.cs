@@ -23,7 +23,7 @@ public class Server : MonoBehaviour
     private bool serverStarted;
     private bool isGetChooseMessage = false; //? 目前就2个人，所以一方选了就直接设置为 true 。实际应该是选一方的人满，其他人就不能选择了
     private bool isTurnMessageSend = false;
-    private float turnTime = 10.5f;
+    private int FinishNumber=0;
 
     private void OnApplicationQuit()
     {
@@ -35,7 +35,7 @@ public class Server : MonoBehaviour
         disconnectList = new List<ServerClient>();
         WhiteList = new List<ServerClient>();
     }
-    
+
     private void Update()
     {
         if (!serverStarted)
@@ -106,7 +106,6 @@ public class Server : MonoBehaviour
 
     public void Init()
     {
-
         DontDestroyOnLoad(gameObject);
         try
         {
@@ -183,30 +182,47 @@ public class Server : MonoBehaviour
             case "CTurn":
                 OnHandleTurn(data);
                 break;
+            case "CFinish":
+                OnHandleTurnFinish(data);
+                break;
         }
     }
-
     private void OnHandleTurn(string data)
     {
         string afterProcess = "&";
         string[] aData = data.Split('|');
-        string side = aData[2];
+        string hero = aData[2];
         string type = aData[3];
         if (type == "Attack")
         {
             int damage = UnityEngine.Random.Range(1, 20);
-            //! &轮数+攻击方+攻击+被攻击方+数值            
+            //! &轮数+攻击方+攻击+被攻击方+数值（white 的伤害数值有2个）            
             afterProcess += aData[1] + "|" + aData[2] + "|" + aData[3] + "|" + aData[4] + "|" + damage.ToString();
+            if (hero == "White")
+            {
+                int damage2 = UnityEngine.Random.Range(1, 20);
+                afterProcess += "|" + damage2.ToString();
+                GameObject.Find(aData[4]).GetComponent<PlayerBehavior>().Hp -= damage;
+                GameObject.Find(aData[4]).GetComponent<PlayerBehavior>().Hp -= damage2;
+                if (GameObject.Find(aData[4]).GetComponent<PlayerBehavior>().Hp <= 0)
+                    Debug.Log(aData[4] + " is dead");
+            }
+            else
+            {
+                GameObject.Find(aData[4]).GetComponent<PlayerBehavior>().Hp -= damage;
+                if (GameObject.Find(aData[4]).GetComponent<PlayerBehavior>().Hp <= 0)
+                    Debug.Log(aData[4] + " is dead");
+            }
         }
         if (type == "Defend")
         {
             //nothing happen right now
         }
-        if (side == "White")
+        if (hero == "White")
         {
-            WhiteBuffer += afterProcess;     
+            WhiteBuffer += afterProcess;
         }
-        if (side == "Black")
+        if (hero == "Black")
         {
             BlackBuffer += afterProcess;
         }
@@ -227,6 +243,23 @@ public class Server : MonoBehaviour
             isTurnMessageSend = true;
             WhiteBuffer = "";
             BlackBuffer = "";
+
+        }
+    }
+
+    private void OnHandleTurnFinish(string data)
+    {
+        FinishNumber += 1;
+        CheckFinishNumber();
+    }
+
+    private void CheckFinishNumber()
+    {
+        if(FinishNumber==2)
+        {
+            UpdateTurn();
+            Debug.Log("UpdateTurn");
+            FinishNumber = 0;
         }
     }
 
@@ -304,7 +337,7 @@ public class Server : MonoBehaviour
     {
         string s = "SUpdate" + "|";
         BroadCast(s,clients);
-        Invoke("ForceTurnMessage", turnTime);
+        //Invoke("ForceTurnMessage", turnTime);
     }
     public void ForceTurnMessage()
     {
@@ -313,7 +346,7 @@ public class Server : MonoBehaviour
             if (WhiteBuffer == "")
             {
                 Debug.Log("WhiteBuffer为空");
-                WhiteBuffer = "&-1|White|Attack|Black|1";
+                WhiteBuffer = "&-1|White|Attack|Black|1|1";
             }
             if (BlackBuffer == "")
             {

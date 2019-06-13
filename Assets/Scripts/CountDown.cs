@@ -8,7 +8,7 @@ public class CountDown : MonoBehaviour
     public List<Button> btns = new List<Button>();
     public GameObject verticalLayoutGroup;
 
-    Text t=null;
+    Text t;
     IEnumerator coroutine;
 
     private void OnEnable()
@@ -20,6 +20,7 @@ public class CountDown : MonoBehaviour
         verticalLayoutGroup.SetActive(true);
         coroutine = StartCountDown();
         t = GetComponent<Text>();
+        t.enabled = true;
         StartCoroutine(coroutine);
         //Invoke("SwitchHangOn", 3);
     }
@@ -27,6 +28,10 @@ public class CountDown : MonoBehaviour
     {
         StopCoroutine(coroutine);
         t.text = "Wait...";
+    }
+    public void EndHangOn()
+    {
+        t.enabled = false;
     }
     IEnumerator StartCountDown()
     {
@@ -57,7 +62,7 @@ public class CountDown : MonoBehaviour
         }
         verticalLayoutGroup.GetComponent<Animator>().SetTrigger("IsChoosed");
         Invoke("SetInactive", 2);
-        //? 调用client 里的一个函数给server 发攻击的消息
+        //? 调用client 里的一个函数给 server 发攻击的消息
         if (GameObject.FindObjectOfType<Client>() == null)
         {
             Debug.Log("没有client！！！");

@@ -14,21 +14,12 @@ public class BlackBehavior : PlayerBehavior
     }
     void Start()
     {
+        //? 设置速度值
+        Speed = 20;
+
         DamageTextPrefab = GameObject.Find("Prefabs").transform.Find("DamageText").gameObject; 
         animator = GetComponent<Animator>();
         
-        //? 目前现在这里注册事件的委托
-        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        //foreach (var player in players)
-        //{
-        //    if (player.name == "White")
-        //    {
-        //        CauseDamage += player.GetComponent<PlayerBehavior>().OnDamaged;
-        //    }
-        //}
-        //CauseDamage+=BloodPartical;
-        //? 注销事件的委托
-        //RemoveEventHandler("CauseDamage");
         
     }
     public override void OnDamaged(object source, DamageEventArgs e)
@@ -42,7 +33,7 @@ public class BlackBehavior : PlayerBehavior
             animator.CrossFadeInFixedTime("Damage", 0.25f);
             animator.SetTrigger("Damage");
         }
-        Hp -= e.DamageValue;
+ 
         //? 产生白色的info text和黑色的info text，其旋转是不一样的
         GameObject blackText = Instantiate(DamageTextPrefab, transform.position + 1.5f * Vector3.up, Quaternion.identity);
         blackText.SetActive(true);
@@ -53,8 +44,10 @@ public class BlackBehavior : PlayerBehavior
         whiteText.SetActive(true);
         whiteText.layer = 9;
         whiteText.GetComponent<TextMesh>().text = e.DamageValue.ToString();
+
+        Hp -= e.DamageValue;
     }
-    public override void OnAttack(object source, EventArgs e)
+    public override void OnAttack()
     {
         StartCoroutine(RunForward()); 
     }
@@ -88,5 +81,7 @@ public class BlackBehavior : PlayerBehavior
             transform.position += 2.0f / 40 * Vector3.forward;
             yield return new WaitForSeconds(0.01f);
         }
+        yield return new WaitForSeconds(0.3f);
+        OnAttakFinished();
     }
 }
